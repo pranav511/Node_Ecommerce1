@@ -50,7 +50,7 @@ exports.addProducts = async (req, res) => {
     //   res.status(400).json({
     //     status: 'error',
     //     results: 'Email is Invalid ',
-    //   });
+    //   }  );
     // }
     // else if(!validator.ValidatePhoneNo(req.body.PhoneNo)){
     //   res.status(400).json({
@@ -68,16 +68,11 @@ exports.addProducts = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
 
-  try {
-    await repo.find({}, { _id: 0, __v: 0 }, (err, doc) => {
-      if (err) {
-        console.log('Error Occures While fetching Data' + err);
-        res.status(400).send('Internal Error', err);
-      } else {
-        res.send(doc);
-      }
-    });
-
+try {
+   const products=await repo.find({},{__V:0,_id:0});
+   if(products){
+    res.send(products);
+   }
     // if (defect.length > 0) {
     //   res.status(200).json({
     //    defect
