@@ -22,7 +22,10 @@ exports.productCategory = function (category) {
   if (
     category.toLowerCase() === 'laptop' ||
     category.toLowerCase() === 'mobile' ||
-    category.toLowerCase() === 'acceseries' ||
+    category.toLowerCase() === 'refrigarator' ||
+    category.toLowerCase() === 'headphone' ||
+    category.toLowerCase() === 'speaker' ||
+    category.toLowerCase() === 'tv' ||
     category.toLowerCase() === 'others'
   ) {
     return true;
