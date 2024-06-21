@@ -12,7 +12,7 @@ const orderController = require('../Controller/order');//
 
 const cartController = require('../Controller/cart');//
 
-//products API
+//products API//
 
 routing.post('/products', productController.addProducts);//
 

@@ -44,15 +44,25 @@ exports.addUsers = async (req, res) => {
   };
   
   exports.getUsers = async (req, res) => {
-        try {
-       await repo.find({email:req.query.email,password:req.query.password}, { _id: 0, __v: 0 },(err,doc)=>{
-        if(err){
-          console.log('Error Occures While fetching Data' +err);
-          res.status(400).send('Internal Error', err);
-      }else{
-          res.send(doc);
-      }
-      });
+      
+          try {
+            const users = await repo.find({email:req.query.email,password:req.query.password}, { _id: 0, __v: 0 });
+            if (!users) {
+              console.log('Error Occures While fetching Data' + err);
+              res.status(400).send('Internal Error', err);
+            }
+            else {
+              res.send(users);
+            }
+            
+      //  await repo.find({email:req.query.email,password:req.query.password}, { _id: 0, __v: 0 },(err,doc)=>{
+      //   if(err){
+      //     console.log('Error Occures While fetching Data' +err);
+      //     res.status(400).send('Internal Error', err);
+      // }else{
+      //     res.send(doc);
+      // }
+      // });
     
     } catch (err) {
       res.status(404).json({
