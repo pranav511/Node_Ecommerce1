@@ -45,14 +45,14 @@ exports.addSellers = async (req, res) => {
   exports.getSellers = async (req, res) => {
     
     try {
-       await repo.find({}, { _id: 0, __v: 0 },(err,doc)=>{
-        if(err){
-          console.log('Error Occures While fetching Data' +err);
-          res.status(400).send('Internal Error', err);
-      }else{
-          res.send(doc);
+      const sellers = await repo.find({email:req.query.email,password:req.query.password}, { _id: 0, __v: 0 });
+      if (!sellers) {
+        console.log('Error Occures While fetching Data' + err);
+        res.status(400).send('Internal Error', err);
       }
-      });
+      else {
+        res.send(sellers);
+      }
     
     } catch (err) {
       res.status(404).json({
