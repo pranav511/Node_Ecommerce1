@@ -8,7 +8,7 @@ exports.addCarts = async (req, res) => {
         validator.userName(req.body.name)
       ) {
         const Id = await helper.generateUserId();
-        const defect = await repo.create({
+        const defect = await cartRepo.create({
           id: Id,
           name: req.body.name,
           email: req.body.email,
@@ -18,7 +18,7 @@ exports.addCarts = async (req, res) => {
         res.status(201).json({
           status: 'success',
           data: {
-            defect,
+            defect
           },
         });
       } else if (!validator.userName(req.body.name)) {
@@ -32,7 +32,7 @@ exports.addCarts = async (req, res) => {
     } catch (err) {
       res.status(404).json({
         status: 'fail',
-        message: err,
+        message: err.message,
       });
     }
   };
