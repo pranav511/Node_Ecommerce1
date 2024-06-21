@@ -2,7 +2,7 @@ const repo = require('../Model/productSchema');
 const validator = require('../Utilities/validator');
 const helper = require('../Utilities/helpers');
 
-exports.getHome=async(req,res)=>{
+exports.getHome = async (req, res) => {
   res.send('Home page for checking')
 }
 
@@ -68,11 +68,18 @@ exports.addProducts = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
 
-try {
-   const products=await repo.find({},{__V:0,_id:0});
-   if(products){
-    res.send(products);
-   }
+  try {
+    const products = await repo.find({}, { __V: 0, _id: 0 });
+    if (products) {
+      res.send(products);
+    } else {
+      res.status(400).json({
+        status: 'success',
+        data: {
+          message: 'No defects available in the repo',
+        },
+      });
+    }
     // if (defect.length > 0) {
     //   res.status(200).json({
     //    defect
@@ -96,14 +103,22 @@ try {
 
 exports.getProductById = async (req, res) => {
   try {
-    await repo.findOne({ id: req.params.id }, { _id: 0, __v: 0 }, (err, doc) => {
-      if (err) {
-        console.log('Error Occures While fetching Data' + err);
-        res.status(400).send('Internal Error', err);
-      } else {
-        res.send(doc);
-      }
-    });
+    const productById = await repo.findOne({ id: req.params.id }, { __V: 0, _id: 0 });
+    if (!productById) {
+      console.log('Error Occures While fetching Data' + err);
+      res.status(400).send('Internal Error', err);
+    }
+    else {
+      res.send(productById);
+    }
+    // await repo.findOne({ id: req.params.id }, { _id: 0, __v: 0 }, (err, doc) => {
+    //   if (err) {
+    //     console.log('Error Occures While fetching Data' + err);
+    //     res.status(400).send('Internal Error', err);
+    //   } else {
+    //     res.send(doc);
+    //   }
+    // });
 
   } catch (err) {
     res.status(404).json({
@@ -117,7 +132,7 @@ exports.updateProduct = async (req, res) => {
   try {
     const products = await repo.findOneAndUpdate(
       { id: req.params.id },
-      req.body, 
+      req.body,
       {
         new: true, //to return new doc back
         runValidators: true, //to run the validators which specified in the model
@@ -173,11 +188,11 @@ exports.invalid = async (req, res) => {
 exports.searchProduct = async (title) => {
   try {
     let result = [];
-    if(title){
+    if (title) {
       // Even you can perform regex in your search 
       result = await repo.find({ title: title });
     }
-     return result;
+    return result;
   } catch (err) {
     const errorObj = { code: 500, error: 'Internal server error' }; // It can be dynamic
     throw errorObj;
