@@ -79,6 +79,6 @@ exports.check=async (req,res)=>{
 }
 exports.ValidUserId= async function(userId){
    
-console.log(usersId);
+console.log(userId);
 
 }
