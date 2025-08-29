@@ -5,8 +5,11 @@ const route = require('./Routes/routing');//
 const cors=require('cors');//
 const app = express();//
 
-var corsOptions = {
-  origin: "https://master--ecomshops.netlify.app"
+const corsOptions = {
+  origin: [
+    "https://master--ecomshops.netlify.app",
+    "https://ecomshops.netlify.app"
+  ]
 };//
 
 app.use(cors(corsOptions));//
